@@ -7,9 +7,17 @@ class Game {
         this.fps = 60;
 
         this.background = new background(this.ctx);
-        this.rocket = new rocket(this.ctx, 10, 450);
+        this.rocket = new rocket(this.ctx, 10, 420);
 
     }
+
+    onKeyDown(event) {
+        this.rocket.onKeyDown(event);
+      }
+    
+    onKeyUp(event) {
+        this.rocket.onKeyUp(event);
+      }
 
     start() {
         if (!this.drawIntervalId) {
@@ -32,6 +40,7 @@ class Game {
 
      move() {
         this.background.move();
+        this.rocket.move();
      }
 
      draw() {

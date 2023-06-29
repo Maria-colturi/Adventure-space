@@ -1,1 +1,5 @@
 BACKGROUND_SPEED = 2;
+ROCKET_SPEED = 3;
+
+const KEY_RIGHT = 39;
+const KEY_LEFT = 37;
