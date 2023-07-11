@@ -3,12 +3,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <tittle>SPACE ADVENTURE</tittle>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
         <link rel="stylesheet" href="/assets/css/main.css" />
     </head>
     <body>
-        <canvas id="canvas" width="800" height="500"></canvas>
-        <button id="start-btn">START</button>
+        <canvas id="canvas" class="hidden" width="800" height="500"></canvas>
+        <div id="home-background" width="800" height="500">
+            <img src="/assets/img/background.jpg"/>
+            <p>SPACE ADVENTURE</p>
+            <img class="start-btn" id="start-btn" src="/assets/img/play.png"/>
+        </div>
+        <div class="hidden btn-container" id="btn-container">
+            <img class="pause-btn" id="pause-btn" src="/assets/img/pause.png"/>
+
+            <img class="sound-off" id="sound-off" src="/assets/img/music.png"/>
+        </div>
+
+
         <script src="/assets/js/models/constans.js"></script>
         <script src="/assets/js/models/bullet.js"></script>
         <script src="/assets/js/models/meteorite.js"></script>

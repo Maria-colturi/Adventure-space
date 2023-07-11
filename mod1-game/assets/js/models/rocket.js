@@ -1,5 +1,5 @@
 class Rocket {
-    constructor (ctx, x, y) {
+    constructor(ctx, x, y) {
         this.ctx = ctx;
 
         this.x = x;
@@ -22,7 +22,7 @@ class Rocket {
         }
 
         this.shootSound = new Audio("/assets/audios/laser.ogg");
-    
+
         this.bullets = [];
 
         this.animationTick = 0;
@@ -38,7 +38,7 @@ class Rocket {
                 break;
             case KEY_SPACE:
                 this.shoot();
-                break 
+                break
         }
     }
 
@@ -46,7 +46,7 @@ class Rocket {
         switch (event.keyCode) {
             case KEY_LEFT:
             case KEY_RIGHT:
-                this.vx =0;
+                this.vx = 0;
                 break;
         }
     }
@@ -57,12 +57,12 @@ class Rocket {
     }
 
     collideWith(element) {
-       return (
-        this.x + this.w > element.x && 
-        this.x < element.x + element.w && 
-        this.y + this.h > element.y &&
-        this.y < element.y + element.h
-       );
+        return (
+            this.x + this.w > element.x &&
+            this.x < element.x + element.w &&
+            this.y + this.h > element.y &&
+            this.y < element.y + element.h
+        );
     }
 
     move() {
@@ -70,15 +70,15 @@ class Rocket {
         if (this.x < 0) {
             this.x = 0;
         } else if (this.x + this.w > this.ctx.canvas.width) {
-            this.x = this.ctx.canvas.width - this.w; // if i put - infront of the canvas.w when the rocket reach the width will start from the left hand side again
+            this.x = this.ctx.canvas.width - this.w;
         }
 
         this.bullets.forEach((bullet) => bullet.move());
-      
+
     }
 
     draw() {
-       if (this.sprite.isReady) {
+        if (this.sprite.isReady) {
             this.ctx.drawImage(
                 this.sprite,
                 //this.sprite.frameWidth + this.sprite.horizontalFrames,
@@ -91,7 +91,7 @@ class Rocket {
                 this.w,
                 this.h
             );
-            this.animate();   
+            this.animate();
         }
 
         this.bullets.forEach((bullet) => bullet.draw());
@@ -99,16 +99,16 @@ class Rocket {
 
     animate() {
         this.animationTick++;
-    
+
         if (this.move()) {
-          this.sprite.horizontalFrameIndex = 1;
+            this.sprite.horizontalFrameIndex = 1;
         } else if (this.animationTick > ROCKET_MOVE_ANIMATION_TICK) {
-          this.animationTick = 0;
-          this.sprite.horizontalFrameIndex++;
-    
-          if (this.sprite.horizontalFrameIndex > this.sprite.horizontalFrames - 1) {
-            this.sprite.horizontalFrameIndex = 0;
-          }
+            this.animationTick = 0;
+            this.sprite.horizontalFrameIndex++;
+
+            if (this.sprite.horizontalFrameIndex > this.sprite.horizontalFrames - 1) {
+                this.sprite.horizontalFrameIndex = 0;
+            }
         }
-      }
+    }
 }

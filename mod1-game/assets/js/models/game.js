@@ -13,17 +13,20 @@ class Game {
     this.meteoriteRain = [];
 
     this.audio = new Audio("/assets/audios/background.ogg");
-    this.audio.volume = 0.30;
+    this.audio.volume = 0.10;
+    this.audio.loop = true;
+    this.gameOversound = new Audio("/assets/audios/game-over.mp3");
+    this.gameOversound.volume = 0.10;
 
     this.explosionImg = new Image();
-    this.explosionImg.src = "/assets/img/laserBlue08.png";
+    this.explosionImg.src = "/assets/img/explosion.png";
     this.explosionImg.onload = () => {
       this.explosionImg.isReady = true;
       this.explosionImg.width = 40;
       this.explosionImg.height = 40;
     };
 
-      this.addTick = 0;
+    this.addTick = 0;
   }
 
   onKeyDown(event) {
@@ -36,7 +39,7 @@ class Game {
 
   start() {
     if (!this.drawIntervalId) {
-
+      this.audio.play();
       this.drawIntervalId = setInterval(() => {
         this.clear();
         this.move();
@@ -47,16 +50,11 @@ class Game {
         this.clearBullets();
         this.addMeteorite();
         if (this.lifeGame === 0) {
-          this.stop();
+          this.gameOver();
         }
-        //this.audio.play();
+        
       }, 1000 / this.fps);
     }
-  }
-
-  stop() {
-    clearInterval(this.drawIntervalId);
-    this.drawIntervalId = undefined;
   }
 
   addMeteorite() {
@@ -83,7 +81,7 @@ class Game {
         return bullet.collideWith(meteorite)
       })
       if (isTrue) {
-        //meteorite.img.src = "/assets/img/laserBlue08.png";
+        meteorite.img.src = "/assets/img/laserBlue08.png";
         meteorite.life = false;
         this.score += 100;
       }
@@ -93,12 +91,8 @@ class Game {
   checkCollisionMeteoriteWithRocket() {
     const meteoriteCollideWithRocket = this.meteoriteRain.some(meteorite => this.rocket.collideWith(meteorite));
     if (meteoriteCollideWithRocket) {
-      //this.ctx.drawImage(this.explosionImg, this.canvas.width / 2, this.canvas.height / 2, 100, 100);
-      this.rocket.sprite.src = "/assets/img/laserBlue08.png";
-      this.rocket.sprite.horizontalFrames = 1;
-      this.rocket.sprite.frameWidth = 48;
-      this.rocket.sprite.frameHeight = 46;
-      this.stop();
+      this.ctx.drawImage(this.explosionImg, this.canvas.width / 2, this.canvas.height / 2, 100, 100);
+      this.gameOver();
     }
 }
 
@@ -138,5 +132,20 @@ loseLifes() {
   }
 }
 
+stop() {
+  clearInterval(this.drawIntervalId);
+  this.drawIntervalId = undefined;
+  this.audio.pause();
+  }  
+
+gameOver() {
+  clearInterval(this.drawIntervalId);
+  this.drawIntervalId = undefined;
+  this.audio.pause();
+  this.gameOversound.play();
+  this.ctx.fillStyle = "rgb(11, 139, 219)";
+  this.ctx.font = "bold 35px franklin Gothic Medium";
+  this.ctx.fillText("GAME OVER", 300, 250)
+}
 
 }

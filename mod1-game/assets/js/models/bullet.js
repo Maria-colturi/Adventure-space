@@ -30,7 +30,13 @@ class Bullet {
 
   draw() {
     if (this.img.isReady) {
-      this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+      this.ctx.drawImage(
+        this.img,
+        this.x + 18,
+        this.y - 25,
+        this.w,
+        this.h);
+
     }
 
   }
